@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,41 @@ namespace Participants
     /// </summary>
     public partial class ParticipantList : Window
     {
+
+        List<Student> students = new List<Student>();
+
         public ParticipantList()
         {
             InitializeComponent();
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+
+        public void Window_Loaded(object sender, RoutedEventArgs e)
         {
+           FileStream fs = null;
+           StreamReader sr = null;
+
+           try
+           {
+               fs = new FileStream(@"..\..\..\deltagerliste.csv", FileMode.Open, FileAccess.Read);
+               sr = new StreamReader(fs);
+
+               string str;
+               string[] tokens;
+               char[] seperators = {';'};
+
+               List<string> lines = new List<string>();
+               string nextLine = "";
+               Student student; 
+
+               str = str.ReadLine();
+
+           }
+           catch (Exception ex)
+           {
+                MessageBox.Show(ex.Message, "Error");
+
+           }
 
         }
     }
