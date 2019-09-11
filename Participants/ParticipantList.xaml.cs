@@ -22,7 +22,7 @@ namespace Participants
     public partial class ParticipantList : Window
     {
 
-        List<Student> students = new List<Student>();
+        List<Students> studentList = new List<Students>();
 
         public ParticipantList()
         {
@@ -46,15 +46,36 @@ namespace Participants
 
                List<string> lines = new List<string>();
                string nextLine = "";
-               Student student; 
+               Students student;
 
-               str = str.ReadLine();
+               str = sr.ReadLine();
 
+
+               while (!sr.EndOfStream)
+               {
+                   str = sr.ReadLine();
+                   if (str != "")
+                   {
+                       tokens = str.Split(seperators, StringSplitOptions.RemoveEmptyEntries);
+
+                       student = new Students()
+                           {GivenName = tokens[1], SirName = tokens[0], StudentId = tokens[3], Auid = tokens[2]};
+                       studentList.Add(student);
+                   }
+
+               }
+
+               dgStudents.ItemsSource = studentList;
            }
            catch (Exception ex)
            {
-                MessageBox.Show(ex.Message, "Error");
+               MessageBox.Show(ex.Message, "Error");
 
+           }
+           finally
+           {
+                sr.Close();
+                fs.Close();
            }
 
         }
